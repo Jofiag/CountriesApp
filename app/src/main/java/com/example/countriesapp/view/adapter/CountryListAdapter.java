@@ -21,19 +21,40 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CountryListAdapter extends RecyclerView.Adapter<CountryListAdapter.CountryViewHolder> {
-    private List<Country> countryList = new ArrayList<>();
+    private List<Country> countryList;
     private Context context;
 
-    public CountryListAdapter(List<Country> countryList, Context context) {
+    public CountryListAdapter(Context context, List<Country> countryList) {
         this.countryList = countryList;
         this.context = context;
     }
 
     public void updateCountryList(List<Country> newList){
-//        this.countryList = newList;
         this.countryList.clear();
-        this.countryList.addAll(newList);
-        notifyDataSetChanged();
+        this.countryList = newList;
+//        notifyDataSetChanged();
+        notifyAll();
+    }
+
+    public void addCountry(Country newCountry){
+        if (!this.countryList.contains(newCountry)){
+            this.countryList.add(newCountry);
+            notifyItemInserted(countryList.indexOf(newCountry));
+        }
+    }
+
+    public void removeCountry(Country country){
+        if (countryList.contains(country)){
+            int index = countryList.indexOf(country);
+
+            countryList.remove(country);
+            notifyItemRemoved(index);
+        }
+    }
+
+    public void removeAll(){
+        countryList.clear();
+        notifyAll();
     }
 
     @NonNull
