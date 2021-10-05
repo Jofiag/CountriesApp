@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.countriesapp.R;
 import com.example.countriesapp.model.Country;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
