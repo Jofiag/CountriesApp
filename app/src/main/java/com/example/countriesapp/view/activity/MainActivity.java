@@ -1,4 +1,4 @@
-package com.example.countriesapp.view;
+package com.example.countriesapp.view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
