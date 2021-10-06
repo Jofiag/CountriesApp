@@ -1,8 +1,11 @@
 package com.example.countriesapp.repository.data.remotedata.retrofit.countrylist;
 
+import com.example.countriesapp.repository.dependencieinjection.dagger.countrylistinjection.DaggerCountryListApiComponent;
 import com.example.countriesapp.repository.model.Country;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import io.reactivex.Single;
 import retrofit2.Retrofit;
@@ -10,26 +13,15 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CountryListRemoteDataSource {
-    private static final String BASE_URL = "https://raw.githubusercontent.com/";
     private static CountryListRemoteDataSource INSTANCE;
 
-    private final CountryListApi countryListApi;
+    @Inject
+    public CountryListApi countryListApi;
 
 
-    public CountryListRemoteDataSource() {
-        /*
-        *   Here we convert the retrofit response from the server to List<Country> as we declared in our CountryListApi.
-        *   But this conversion must know witch variable from the server's list object correspond to each attribute of our Country model.
-        *   To make it know we use annotation in our Country model class, so in that class is the annotation needed for this conversion to work.
-        *
-        * */
-
-        countryListApi = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())       // make sure you added this library : 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
-                .build()
-                .create(CountryListApi.class);
+    private CountryListRemoteDataSource() {
+        //Using the dagger generated class to tell our CountryListRemoteDataSource how to use CountryListApi
+        DaggerCountryListApiComponent.create().inject(this);
     }
 
 
