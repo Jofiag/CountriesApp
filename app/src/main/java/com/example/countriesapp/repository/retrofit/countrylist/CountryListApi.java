@@ -1,10 +1,10 @@
-package com.example.countriesapp.model.retrofit.countrylist;
+package com.example.countriesapp.repository.retrofit.countrylist;
 
 import com.example.countriesapp.model.Country;
 
 import java.util.List;
 
-import io.reactivex.rxjava3.core.Single;
+import io.reactivex.Single;
 import retrofit2.http.GET;
 
 public interface CountryListApi {

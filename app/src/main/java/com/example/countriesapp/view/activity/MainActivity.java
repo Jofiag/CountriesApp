@@ -1,7 +1,6 @@
 package com.example.countriesapp.view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -80,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
     private void showLoadingProcess(){
         countryListVewModel.getLoading().observe(this, isLoading -> {
             if (isLoading != null && isLoading) {
-                countryRecyclerView.setVisibility(View.GONE);
+//                countryRecyclerView.setVisibility(View.GONE);
                 listErrorMessage.setVisibility(View.GONE);
                 progressBar.setVisibility(View.VISIBLE);
             } else
