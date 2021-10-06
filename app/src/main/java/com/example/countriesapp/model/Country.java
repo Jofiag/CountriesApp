@@ -42,7 +42,7 @@ public class Country {
         this.capital = capital;
     }
 
-    public String getFlag() {
+    public String getFlagUrl() {
         return flag;
     }
 
