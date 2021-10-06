@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
         showLoadingProcess();
         showCountryList();
         showEventualErrorMessage();
+        refreshCountryList();
+
     }
 
     private void initializeCountryListViewModel(){
@@ -84,6 +86,13 @@ public class MainActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.VISIBLE);
             } else
                 progressBar.setVisibility(View.GONE);
+        });
+    }
+
+    private void refreshCountryList(){
+        refreshLayout.setOnRefreshListener(() -> {
+            countryListVewModel.refresh();
+            refreshLayout.setRefreshing(false);
         });
     }
 }
