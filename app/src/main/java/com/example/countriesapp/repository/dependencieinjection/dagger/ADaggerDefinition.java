@@ -1,6 +1,6 @@
 package com.example.countriesapp.repository.dependencieinjection.dagger;
 
-public class Dagger {
+public class ADaggerDefinition {
     /*
     *   Dagger is a dependency injection.
     *   A dependency injection allow us to hide to the ViewModel the way the data is collected and let it know only how to use the data collected.

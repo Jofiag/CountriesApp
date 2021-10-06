@@ -4,10 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.countriesapp.repository.dependencieinjection.dagger.DaggerComponentInjector;
 import com.example.countriesapp.repository.model.Country;
 import com.example.countriesapp.repository.data.remotedata.retrofit.countrylist.CountryListRemoteDataSource;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -37,14 +40,18 @@ import io.reactivex.schedulers.Schedulers;
  *                        By doing so we prevent memory leak.
  */
 public class CountryListViewModel extends ViewModel {
-    private final CountryListRemoteDataSource countryListRemoteDataSource = CountryListRemoteDataSource.getInstance();
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
-
     private final MutableLiveData<List<Country>> countryListLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> countryLoadError = new MutableLiveData<>();
     private final MutableLiveData<Boolean> loading = new MutableLiveData<>();
 
+    @Inject
+    public CountryListRemoteDataSource countryListRemoteDataSource;
 
+    public CountryListViewModel() {
+        super();
+        DaggerComponentInjector.create().injectCountryListRemoteData(this);
+    }
 
     public void refresh(){
         fetchCountryList();
@@ -54,7 +61,6 @@ public class CountryListViewModel extends ViewModel {
 
         loading.setValue(true);
         compositeDisposable.add(
-
                 countryListRemoteDataSource.getCountryList()
                 .subscribeOn(Schedulers.newThread())                //make the task on a new thread
                 .observeOn(AndroidSchedulers.mainThread())          //when the task is finish send result on the main thread
