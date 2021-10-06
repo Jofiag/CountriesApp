@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         //Observing the country list from our view model so that ui get updated whenever the list changes
         countryListVewModel.getCountryListLiveData().observe(this, countryList -> {
             if (countryList != null){
-                countryListAdapter = new CountryListAdapter(this, countryList);
+                countryListAdapter = new CountryListAdapter(countryList);
                 countryRecyclerView.setHasFixedSize(true);
                 countryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
                 countryRecyclerView.setAdapter(countryListAdapter);

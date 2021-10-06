@@ -1,6 +1,6 @@
-package com.example.countriesapp.repository.retrofit.countrylist;
+package com.example.countriesapp.repository.data.remotedata.retrofit.countrylist;
 
-import com.example.countriesapp.model.Country;
+import com.example.countriesapp.repository.model.Country;
 
 import java.util.List;
 

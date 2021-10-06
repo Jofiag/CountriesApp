@@ -1,7 +1,6 @@
 package com.example.countriesapp.view.adapter;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.countriesapp.R;
-import com.example.countriesapp.model.Country;
+import com.example.countriesapp.repository.model.Country;
 import com.example.countriesapp.view.util.GlideUtil;
 
 import java.util.List;
@@ -21,41 +20,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CountryListAdapter extends RecyclerView.Adapter<CountryListAdapter.CountryViewHolder> {
-    private List<Country> countryList;
-    private Context context;
+    private final List<Country> countryList;
 
-    public CountryListAdapter(Context context, List<Country> countryList) {
+    public CountryListAdapter(List<Country> countryList) {
         this.countryList = countryList;
-        this.context = context;
     }
 
-    public void updateCountryList(List<Country> newList){
-        this.countryList.clear();
-        this.countryList = newList;
-//        notifyDataSetChanged();
-        notifyAll();
-    }
-
-    public void addCountry(Country newCountry){
-        if (!this.countryList.contains(newCountry)){
-            this.countryList.add(newCountry);
-            notifyItemInserted(countryList.indexOf(newCountry));
-        }
-    }
-
-    public void removeCountry(Country country){
-        if (countryList.contains(country)){
-            int index = countryList.indexOf(country);
-
-            countryList.remove(country);
-            notifyItemRemoved(index);
-        }
-    }
-
-    public void removeAll(){
-        countryList.clear();
-        notifyAll();
-    }
 
     @NonNull
     @Override

@@ -1,4 +1,4 @@
-package com.example.countriesapp.model;
+package com.example.countriesapp.repository.model;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -12,13 +12,13 @@ public class Country {
     * */
 
     @SerializedName("name")
-    private String name;
+    private final String name;
 
     @SerializedName("capital")
-    private String capital;
+    private final String capital;
 
     @SerializedName("flagPNG")
-    private String flag;
+    private final String flag;
 
     public Country(String name, String capital, String flag) {
         this.name = name;
@@ -30,23 +30,12 @@ public class Country {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getCapital() {
         return capital;
-    }
-
-    public void setCapital(String capital) {
-        this.capital = capital;
     }
 
     public String getFlagUrl() {
         return flag;
     }
 
-    public void setFlag(String flag) {
-        this.flag = flag;
-    }
 }

@@ -4,8 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.countriesapp.model.Country;
-import com.example.countriesapp.repository.retrofit.countrylist.CountryListRemoteDataSource;
+import com.example.countriesapp.repository.model.Country;
+import com.example.countriesapp.repository.data.remotedata.retrofit.countrylist.CountryListRemoteDataSource;
 
 import java.util.List;
 
@@ -37,12 +37,12 @@ import io.reactivex.schedulers.Schedulers;
  *                        By doing so we prevent memory leak.
  */
 public class CountryListViewModel extends ViewModel {
-    private /*final*/ CountryListRemoteDataSource countryListRemoteDataSource = CountryListRemoteDataSource.getInstance();
-    private /*final*/ CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private final CountryListRemoteDataSource countryListRemoteDataSource = CountryListRemoteDataSource.getInstance();
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-    private /*final*/ MutableLiveData<List<Country>> countryListLiveData = new MutableLiveData<>();
-    private /*final*/ MutableLiveData<Boolean> countryLoadError = new MutableLiveData<>();
-    private /*final*/ MutableLiveData<Boolean> loading = new MutableLiveData<>();
+    private final MutableLiveData<List<Country>> countryListLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> countryLoadError = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> loading = new MutableLiveData<>();
 
 
 
@@ -51,27 +51,6 @@ public class CountryListViewModel extends ViewModel {
     }
 
     private void fetchCountryList(){
-        /*Country benin = new Country("Benin", "Porto-Novo", "");
-        Country france = new Country("France", "Paris", "");
-        Country unitedEmirates = new Country("United Arab Emirates", "Abou Dabi", "");
-
-        List<Country> countryList = new ArrayList<>();
-        countryList.add(benin);
-        countryList.add(france);
-        countryList.add(unitedEmirates);
-        countryList.add(benin);
-        countryList.add(france);
-        countryList.add(unitedEmirates);
-        countryList.add(benin);
-        countryList.add(france);
-        countryList.add(unitedEmirates);
-        countryList.add(benin);
-        countryList.add(france);
-        countryList.add(unitedEmirates);
-
-        countryListLiveData.setValue(countryList);
-        countryLoadError.setValue(false);
-        loading.setValue(false);*/
 
         loading.setValue(true);
         compositeDisposable.add(
