@@ -58,7 +58,6 @@ public class CountryListViewModel extends ViewModel {
     }
 
     private void fetchCountryList(){
-
         loading.setValue(true);
         compositeDisposable.add(
                 countryListRemoteDataSource.getCountryList()
