@@ -7,6 +7,8 @@ import com.example.countriesapp.repository.data.remotedata.retrofit.countrylist.
 import com.example.countriesapp.repository.model.Country;
 import com.example.countriesapp.viewmodel.CountryListViewModel;
 
+import net.bytebuddy.implementation.bytecode.Throw;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -19,9 +21,12 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
+import io.reactivex.SingleObserver;
+import io.reactivex.SingleSource;
 import io.reactivex.android.plugins.RxAndroidPlugins;
 import io.reactivex.internal.schedulers.ExecutorScheduler;
 import io.reactivex.plugins.RxJavaPlugins;
@@ -52,7 +57,8 @@ public class CountryListViewModuleTest {
     }
 
     /**
-     * @countryListRemoteDataSource : is the mock of the countryListRemoteDataSource we injected with dagger in our CountryListViewModel class
+     * @countryListRemoteDataSource : is the mock of the countryListRemoteDataSource we injected with dagger in our CountryListViewModel class.
+     * We not recommended to instantiate a remote data from internet in a test, but here we can do that because we inject it with dagger in the data class.
      */
     @Mock
     CountryListRemoteDataSource countryListRemoteDataSource;
@@ -77,9 +83,27 @@ public class CountryListViewModuleTest {
         //Here is where we call the method of our view model witch use our remote data to get the list wanted by calling countryListRemoteDataSource.getCountryList()
         countryListViewModel.refresh();
 
-        Assert.assertEquals(1, countryList.size());
+        Assert.assertEquals(1, Objects.requireNonNull(countryListViewModel.getCountryListLiveData().getValue()).size());
         Assert.assertEquals(false, countryListViewModel.getCountryLoadError().getValue());
         Assert.assertEquals(false, countryListViewModel.getLoading().getValue());
+    }
+
+    @Test
+    public void getCountryListFailed(){
+
+        Single<List<Country>> countryListSingleTest = Single.error(new Throwable("An error has occurred while getting country list"));
+
+        Mockito.when(countryListRemoteDataSource.getCountryList()).thenReturn(countryListSingleTest);
+
+        countryListViewModel.refresh();
+
+        //Since we are in the getting country list failed here, the list from the view model must be null
+        Assert.assertNull(countryListViewModel.getCountryListLiveData().getValue());
+
+        Assert.assertEquals(true, countryListViewModel.getCountryLoadError().getValue());
+        Assert.assertEquals(false, countryListViewModel.getLoading().getValue());
+
+
     }
 
 }
